@@ -2,6 +2,21 @@
   <head>
     <title>camtrap</title>
 
+    <div id="help">
+      <h1>Camtrap Application</h1>
+
+      <p>To use open this website in a modern browser. If you are using the Makey Mayey hook up a switch between the earth and the space key.</p>
+
+      <p>
+        The browser will likely promt you allow permision to your web cam. Once everything is hooked up you should just be able to make a connection
+        between the two wires and a camera image will appear below. You can also trigger this using just the space key on your computer.
+      </p>
+
+      <a href="#" class="hide-help">Click here</a> to hide this help text.
+
+      <br><br>
+    </div>
+
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 
     <link rel="stylesheet" href="/camtrap/css/style.css">
@@ -11,14 +26,17 @@
   <body>
     
 
-<video id="webcam" width="300" height="300"></video>
-<canvas id="c" style="display:none;" width="300" height="300"></canvas>
+<video id="webcam" width="300" height="300" style="background: #ccc;"></video>
+<canvas id="c" style="display:none; background: #ccc;" width="300" height="300"></canvas>
 
 
     <!-- JavaScript goes in the footer! -->
   
     <script src="/camtrap/js/main.js"></script>
-  
+    
+    <script type="text/javascript">
+      $('.hide-help').click(function(){ $('#help').hide() });
+    </script>
   
   </body>
 </html>
