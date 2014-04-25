@@ -43,6 +43,9 @@ module.exports = function (grunt) {
 
   // Github Configuration
   var gh_commit = userConfig.git.defaultCommit;
+  var gh_upstream = userConfig.git.deployUpstream;
+  var gh_deploy = userConfig.git.deployBranch;
+  
   //////////////////////////////
   //Grunt Config
   //////////////////////////////
@@ -169,6 +172,27 @@ module.exports = function (grunt) {
       }
     },
 
+    // JSHint Task
+    jshint: {
+      options: {
+        jshintrc: '.jshintrc'
+      },
+      all: [
+        jsDir + '/{,**/}*.js',
+        '!' + jsDir + '/{,**/}*.min.js'
+      ]
+    },
+
+    // CSS Lint
+    csslint: {
+      options: {
+        csslintrc: '.csslintrc'
+      },
+      all: [
+        root + '/' + cssDir + '/{,**/}*.css'
+      ]
+    },
+
     // Image Min Task
     imagemin: {
       dist: {
@@ -292,6 +316,9 @@ module.exports = function (grunt) {
           return 'git add ' + distPath + ' && git commit -m "' + commit + '" ' + distPath;
         }
       },
+      deploy: {
+        cmd: 'git subtree push --prefix .dist ' + gh_upstream + ' ' + gh_deploy
+      },
       export: {
         cmd: function(path) {
           return 'cp -r ' + distPath + ' ' + path;
@@ -332,9 +359,19 @@ module.exports = function (grunt) {
     }
 
     
+    if (deploy) {
+      grunt.task.run(['exec:deploy']);
+    }
+    
   });
 
   
+  //////////////////////////////
+  // Deploy Task
+  //////////////////////////////
+  grunt.registerTask('deploy', [
+    'exec:deploy'
+  ]);
 
   //////////////////////////////
   // Export Tasks
